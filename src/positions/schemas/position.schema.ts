@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
@@ -8,7 +9,7 @@ export class Position {
   @Prop({ required: true, unique: true, trim: true })
   name: string;
 
-  @Prop({ trim: true })
+  @Prop({ trim: true, maxlength: 200 })
   description?: string;
 }
 
