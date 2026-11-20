@@ -43,6 +43,9 @@ export class Member {
 
   @Prop({ default: true })
   isActive: boolean;
+
+  @Prop({ default:true })
+  mustChangePassword:boolean;
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);
