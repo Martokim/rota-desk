@@ -22,30 +22,30 @@ export class MembersService {
     private readonly memberModel: Model<Member>,
   ) {}
 
-async create(memberData: CreateMemberInput) {
-  const { password, ...memberDetails } = memberData;
+            async create(memberData: CreateMemberInput) {
+            const { password, ...memberDetails } = memberData;
 
-  const passwordHash = await bcrypt.hash(password, 10);
+            const passwordHash = await bcrypt.hash(password, 10);
 
-  try {
-    return await this.memberModel.create({
-      ...memberDetails,
-      email: memberDetails.email.trim().toLowerCase(),
-      passwordHash,
-    });
-  } catch (error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      error.code === 11000
-    ) {
-      throw new ConflictException('A member with this email already exists');
-    }
+            try {
+                    return await this.memberModel.create({
+                    ...memberDetails,
+                    email: memberDetails.email.trim().toLowerCase(),
+                    passwordHash,
+                    });
+                } catch (error: unknown) {
+                if (
+                typeof error === 'object' &&
+                error !== null &&
+                'code' in error &&
+                error.code === 11000
+                ) {
+                throw new ConflictException('A member with this email already exists');
+                }
 
-    throw error;
-  }
-}
+                throw error;
+            }
+            }
 
   findByEmail(email: string) {
     return this.memberModel
@@ -59,6 +59,27 @@ async create(memberData: CreateMemberInput) {
       .select('+passwordHash')
       .exec();
   }
+        findByIdWithPassword(id: string) {
+        return this.memberModel
+            .findById(id)
+            .select('+passwordHash')
+            .exec();
+        }
+
+        async updatePassword(id: string, newPassword: string) {
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+
+        return this.memberModel
+            .findByIdAndUpdate(
+            id,
+            {
+                passwordHash,
+                mustChangePassword: false,
+            },
+            { new: true },
+            )
+            .exec();
+        }
 
   findById(id: string) {
     return this.memberModel.findById(id).exec();
