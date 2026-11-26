@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { PositionsModule } from './positions/positions.module';
 import { MembersModule } from './members/members.module';
 import { AuthModule } from './auth/auth.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
       }),
     }),
     PositionsModule,
+    EventsModule,
     MembersModule,
     AuthModule,
   ],

@@ -1,14 +1,10 @@
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {
-  HydratedDocument,
-  Schema as MongooseSchema,
-  Types,
-} from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema, Types } from 'mongoose';
 
 export enum EventStatus {
   DRAFT = 'DRAFT',
   PUBLISHED = 'PUBLISHED',
+  POSTPONED = 'POSTPONED',
   CANCELLED = 'CANCELLED',
   COMPLETED = 'COMPLETED',
 }
